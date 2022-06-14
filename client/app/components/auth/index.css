@@ -1,0 +1,9 @@
+.password-forgot {
+    margin-bottom: 10px;
+}
+
+.resend {
+    cursor: pointer;
+    color: #f00;
+    text-decoration: underline;
+}

@@ -1,0 +1,41 @@
+import nodemailer from 'nodemailer';
+import { emailConfig } from '../config/mail.config';
+import { constants } from '../config/constants.config';
+
+const transporter = nodemailer.createTransport(emailConfig);
+
+const from = 'MERN Stack Team';
+
+export function sendVerificationEmail(email, username, token) {
+  	const html = "<div style='margin: 0; padding: 0; width: 100%; font-family: Trebuchet MS, sans-serif;'>" +
+    	"<div style='background-color: #f2f2f2; padding: 45px;'>" +
+    	"<div style='background-color: #ffffff; padding: 40px; text-align: center;'>" +
+    	"<h1 style='color: #5f5f5f; margin-bottom: 30px;'>Hi, " + username + "</h1>" +
+    	"<p style='color: #5f5f5f;'>Click the big button below to activate your account.</p>" +
+    	"<a href='" + constants.ROOT_URL + "/auth/verify-email?email=" + email + "&token=" + token + "' style='background-color: #288feb; color: #fff; padding: 14px; text-decoration: none; border-radius: 5px; margin-top: 20px; display: inline-block;'>Activate Account</a>" +
+    	"</div> <h3 style='color: #5f5f5f; text-align: center; margin-top: 30px;'>MERN Stack Team</h3></div></div>";
+
+  	transporter.sendMail({
+    	from,
+    	to: email,
+    	subject: '[MERN] Please confirm your email account',
+    	html
+  	}, (err) => { if (err) { return err; } });
+}
+
+export function sendResetPassword(email, username, token) {
+  	const html = "<div style='margin: 0; padding: 0; width: 100%; font-family: Trebuchet MS, sans-serif;'>" +
+    	"<div style='background-color: #f2f2f2; padding: 45px;'>" +
+    	"<div style='background-color: #ffffff; padding: 40px; text-align: center;'>" +
+    	"<h1 style='color: #5f5f5f; margin-bottom: 30px;'>Hi, " + username + "</h1>" +
+    	"<p style='color: #5f5f5f; line-height: 22px;'>We've received a request to reset your password. If you didn't make the request, just ignore this email. Otherwise, you can reset your password using this link</p>" +
+    	"<a href='" + constants.ROOT_URL + "/auth/reset-password/new?email=" + email + "&token=" + token + "' style='background-color: #288feb; color: #fff; padding: 14px; text-decoration: none; border-radius: 5px; margin-top: 20px; display: inline-block;'>Click here to reset your password</a>" +
+    	"</div> <h3 style='color: #5f5f5f; text-align: center; margin-top: 30px;'>MERN Stack Team</h3></div></div>";
+
+  	transporter.sendMail({
+    	from,
+    	to: email,
+    	subject: '[MERN] Please reset your password',
+    	html
+  	}, (err) => { if (err) { return err; } });
+}
